@@ -14,7 +14,7 @@
         <Input type="text" v-model="formInline.code" placeholder="输入验证码" class="code">
         <Icon type="ios-locked-outline" slot="prepend" size="15"></Icon>
         </Input>
-        <Button class="codeButton">发送验证码</Button>
+        <timer-btn ref="timerBtn" @click.native="getCode" :disabled="btnDisabled"></timer-btn>
       </FormItem>
       <FormItem prop="password">
         <Input type="password" v-model="formInline.password" placeholder="请设置6-16位新密码包括数字和字母">
@@ -42,19 +42,24 @@
             <p>Content of dialog</p>
           </Modal>
         </FormItem>
-        <a href="javascript:;" style="margin-top: 8px">返回登录</a>
+        <a href="http://lh.playhudong.com" style="margin-top: 8px">返回登录</a>
       </div>
       <FormItem>
         <Button type="primary" long @click="handleSubmit('formInline')">创建账号</Button>
       </FormItem>
     </Form>
+
   </div>
 </template>
 
 <script>
-  import { isvalidUsername,isvalidPassword } from '@/router/validate'
-
+  import { isvalidUsername,isvalidPassword } from './second/validate'
+  import TimerBtn from './second/TimeBtn.vue'
+  import axios from 'axios'
   export default {
+    components:{
+      TimerBtn
+    },
     data () {
       const validateUsername = (rule, value, callback) => {
         if (!isvalidUsername(value)) {
@@ -79,12 +84,13 @@
       }
       return {
         modal1: false,
+        btnDisabled:false,
         formInline: {
           user: '',
           code:'',
           password: '',
           passwords:'',
-          checkbox: []
+//          checkbox: []
         },
         ruleInline: {
           code:[
@@ -103,10 +109,10 @@
           passwords:[
             { required: true, message: '请再次输入密码', trigger: 'blur' },
             { required: true, trigger:'blur',validator:validatePasswords}
-          ],
-          checkbox: [
-            { required: true, type: 'array', min: 1, message: '请选择', trigger: 'change' }
           ]
+//          checkbox: [
+//            { required: true, type: 'array', min: 1, message: '请选择', trigger: 'change' }
+//          ]
         }
       }
     },
@@ -114,10 +120,28 @@
       handleSubmit(name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
-            this.$Message.success('创建成功');
-            this.$emit('next','ok');
-          } else {
-            this.$Message.error('创建失败');
+            axios.post('http://testopen.playhudong.com/openuser/regist',{
+              username:this.formInline.user,
+              code:this.formInline.code,
+              password:this.formInline.passwords
+            })
+              .then(res =>{
+                const data = res.data;
+                if(data.code === 20005){
+                  this.$Message.success('创建成功');
+                  this.$emit('next','1');
+                  this.$router.push({ name: 'accredit',
+                    params: { username: this.formInline.user }})
+                }else if(data.code === 50002){
+                  this.$Message.error('该手机号已经注册过了！')
+                }else if(data.code === 50003){
+                  this.$Message.error('验证码错误，请重新输入！')
+                  this.formInline.code = ''
+                }
+              })
+              .catch(res => {
+                this.$Message.error('创建失败,请稍后重试！');
+              })
           }
         })
       },
@@ -125,7 +149,36 @@
         if(this.formInline.checkbox.length === 0){
           this.formInline.checkbox.push('我同意火眼金睛')
         }
+      },
+      sended() {
+        this.$refs.timerBtn.run();
+        this.btnDisabled = false;
+      },
+      getCode() {
+        this.btnDisabled = true;
+        setTimeout(this.sended,1000)
+        axios.post('http://testopen.playhudong.com/openuser/sendSms',{
+            username:this.formInline.user,
+            from:3
+        })
+          .then(response => {
+            const data = response.data;
+            console.log(data)
+            if(data.code === 50006){
+              this.$Message.warning('请稍后再试！');
+            }else if(data.code === 50007){
+              this.$Message.error('该手机号已经注册过了！')
+            }else if(data.code === 20005){
+              this.$Message.success('发送成功，请注意手机短信！')
+            }
+          })
+          .catch(response => {
+
+          });
       }
+    },
+    beforeCreate:function () {
+      this.$emit('next',"0");
     }
   }
 
@@ -134,6 +187,7 @@
 <style>
   #registerBox{
     width: 300px;
+    min-height:400px;
     margin: 20px auto;
     padding: 20px 20px 5px;
     box-shadow: 0 0 10px rgba(0,0,0,0.4);
@@ -175,6 +229,9 @@
   #registerBox .codeBox .code{
     position: inherit;
     width: 60%;
+  }
+  #registerBox .codeBox .code .ivu-input{
+    width: 150px;
   }
   #registerBox .codeBox .codebutton{
     width: 30%;
