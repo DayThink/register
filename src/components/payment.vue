@@ -211,7 +211,7 @@
     flex-direction: row;
     padding:0 10px;
     img{
-      width: 120px;
+      width: 70px;
     }
   }
   .payment{
