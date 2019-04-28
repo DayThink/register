@@ -1,12 +1,132 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>register</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录页</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/jigsaw.css">
+</head>
+<body>
+<div class="header">
+    <div class="inner">
+        <div class="left">
+            <img src="images/logo.png" alt="">
+            <ul class="list">
+                <li>首页</li>
+                <li>软笔课程 <i></i></li>
+                <li>硬笔课程 <i></i></li>
+                <li>国画课程 <i></i></li>
+                <li>限免公开课</li>
+                <li>学员成长史</li>
+            </ul>
+        </div>
+        <div class="right">
+            <a href="javascript:;" class="but">登录</a>
+            <a href="javascript:;" class="but active">注册</a>
+        </div>
+    </div>
+</div>
+<div class="contant">
+    <div class="change">
+        <span>切换为扫码登录</span>
+        <img src="images/icon-2.png" alt="">
+    </div>
+    <div class="center">
+        <div class="title">
+            <span>登录习墨书院</span>
+            <em></em>
+        </div>
+        <form action="" class="form">
+            <input type="text" name="name" autocomplete="off" id="name" placeholder="手机号">
+            <input type="password" name="pwd" id="pwd" placeholder="密码">
+            <div class="validate">
+                <img src="images/icon-5.png" alt="" id="pic">
+                <span id="word">点击按钮进行验证</span>
+            </div>
+            <div class="sliderbox">
+                <img src="images/icon-10.jpg" class="close">
+                <div id="captcha"></div>
+            </div>
+            <div id="msg"></div>
+        </form>
+        <a href="javascript:;" class="button">立即登录</a>
+        <div class="bottom">
+            <input type="checkbox" id="remember">
+            <label for="remember">两周内自动登录</label>
+            <a href="javascript:;">忘记密码</a>
+        </div>
+        <div class="over">
+            <span>立即注册   ></span>
+        </div>
+    </div>
+</div>
+<div class="tops"><img src="images/top.png" alt=""></div>
+<div class="footer">
+    <div class="inner">
+        <div class="top" id="findout">
+            <img src="images/icon-7.jpg" alt="">
+        </div>
+        <div class="center">
+            <div class="left">
+                <h1>400 010 1610</h1>
+                <em>9:00-22:00 周一至周日</em>
+            </div>
+            <ul class="centers">
+                <li>客户端下载</li>
+                <span>|</span>
+                <li>加入我们</li>
+                <span>|</span>
+                <li>学霸君APP</li>
+                <span>|</span>
+                <li>官方微信</li>
+            </ul>
+            <img src="images/icon-6.png" alt="">
+        </div>
+        <div class="bottom">
+            <div class="box">
+                <span>热门标签</span> <b>|</b>
+                <ul>
+                    <li>物理辅导</li>
+                    <li>数学辅导</li>
+                    <li>语文辅导</li>
+                    <li>初三冲刺补习</li>
+                    <li>初一数学辅导</li>
+                    <li>高中辅导班</li>
+                    <li>中小学1对1</li>
+                    <li>小学补习班</li>
+                    <li>中小学培训</li>
+                    <li>中小学辅导网</li>
+                    <li>冲刺班</li>
+                </ul>
+            </div>
+            <div class="box">
+                <span>猜你喜欢</span> <b>|</b>
+                <ul>
+                    <li>一对一辅导</li>
+                    <li>一对一家教</li>
+                    <li>英语补习</li>
+                    <li>高中辅导班</li>
+                    <li>高三理综辅导</li>
+                    <li>初二物理辅导</li>
+                    <li>初中生辅导班</li>
+                    <li>如何才能学好数学</li>
+                    <li>怎样才能提高成绩</li>
+                </ul>
+            </div>
+            <div class="box">
+                <span>友情链接</span> <b>|</b>
+                <ul>
+                    <li>鲸媒体</li>
+                    <li>新浪教育</li>
+                    <li>网易教育</li>
+                    <li>中国教育在线</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/jigsaw.min.js"></script>
+<script src="js/index.js"></script>
+</body>
 </html>
